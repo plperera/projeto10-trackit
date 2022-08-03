@@ -3,6 +3,7 @@ import Footer from "./Footer"
 import Habitos from "./Habitos"
 import Historico from "./Historico"
 import Login from "./Login"
+import Cadastro from "./Cadastro"
 import Hoje from "./Hoje"
 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
@@ -25,6 +26,13 @@ export default function App (){
             <Routes>
 
                 <Route path="/" element={<Login
+                    menu={menu}
+                    setMenu={setMenu}
+                    footer={footer}
+                    setFooter={setFooter}
+                />} />
+
+                <Route path="/cadastro" element={<Cadastro
                     menu={menu}
                     setMenu={setMenu}
                     footer={footer}
