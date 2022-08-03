@@ -36,7 +36,10 @@ const Container = styled.div`
     }
 
     h1{
-        font-family: 'Playball';
+        @import url('https://fonts.googleapis.com/css2?family=Playball&family=Recursive:wght@300;400;500;600;700&display=swap');
+        font-family: 'Playball', cursive;
+        font-family: 'Recursive', sans-serif;
+
 
         font-size: 38.982px;
         margin-left:18px;
