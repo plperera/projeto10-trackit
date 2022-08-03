@@ -9,7 +9,7 @@ export default function Footer (){
 
             <h3>Hábitos</h3>
       
-            <Progreso pocentagem={50}/>
+            <Progreso pocentagem={70}/>
            
             <h3>Histórico</h3>
 
