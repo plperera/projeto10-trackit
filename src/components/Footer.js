@@ -2,10 +2,12 @@ import styled from "styled-components"
 
 import Progreso from "./Progresso";
 
-export default function Footer (){
+export default function Footer ({footer, setFooter}){
+
+    let display = footer ? ("flex"):("none")
 
     return (
-        <Container>
+        <Container display={display}>
 
             <h3>Hábitos</h3>
       
@@ -18,10 +20,11 @@ export default function Footer (){
 }
 
 const Container = styled.div`
+
     position:fixed;
     bottom: 0;
 
-    display:flex;
+    display:${(props) => props.display};
     align-items:center;
     justify-content:space-around;
 

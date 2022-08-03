@@ -1,9 +1,11 @@
 import styled from "styled-components"
 
-export default function Menu (){
+export default function Menu ({menu, setMenu}){
+
+    let display = menu ? ("flex"):("none")
 
     return (
-        <Container>
+        <Container display={display}>
             <h1>TrackIt</h1>
             <img src="https://uploads-ssl.webflow.com/602d151a812ce93ee387ebe5/624763a85861ff0bf6d28fd1_Cachorro%20pode%20ter%20autismo.jpeg"/>
         </Container>
@@ -17,7 +19,7 @@ const Container = styled.div`
     width: 100%;
     height: 70px;
 
-    display:flex;
+    display:${(props) => props.display};
     align-items:center;
     justify-content:space-between;
 
