@@ -1,8 +1,14 @@
 import styled from "styled-components"
+import { useState } from "react"
+
+import Dias from "./Dias"
 
 export default function Habitos({user, setUser}){
 
     console.log(user)
+    const [criarHabito, setCriarHabito] = useState(!false)
+    const [form, setForm] = useState({})
+    const [dias, setDias] = useState([])
 
     return (
         <Container>
@@ -11,7 +17,58 @@ export default function Habitos({user, setUser}){
                 <div>+</div>
             </Tittle>
 
-            {/* mostrar habitos, ou texto de nao tiver habitos ainda */}
+            <ContainerHabito>
+
+                {criarHabito ? (
+                    <>
+                    <input placeholder="nome do hábito"></input>
+
+                    <ContainerDias>
+
+                        <InputDia>
+                            <Dias dia="D" i="0"/>
+                        </InputDia>
+
+                        <InputDia>
+                            <Dias dia="S" i="1"/>
+                        </InputDia>
+
+                        <InputDia>
+                            <Dias dia="T" i="2"/>
+                        </InputDia>
+
+                        <InputDia>
+                            <Dias dia="Q" i="3"/>
+                        </InputDia>
+
+                        <InputDia>
+                            <Dias dia="Q" i="4"/>
+                        </InputDia>
+
+                        <InputDia>
+                            <Dias dia="S" i="5"/>
+                        </InputDia>
+
+                        <InputDia>
+                            <Dias dia="S" i="6"/>
+                        </InputDia>
+
+                    </ContainerDias>
+
+                    <ButttonDiv>
+                        <ButtonCancel>Cancelar</ButtonCancel>
+                        <ButtonSave>Salvar</ButtonSave>
+                    </ButttonDiv>
+                    </>
+
+                ):(
+                    <></>
+                )}
+                
+                
+            </ContainerHabito>
+
+            <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
 
         </Container>
     )
@@ -20,15 +77,24 @@ export default function Habitos({user, setUser}){
 const Container = styled.div`
 
     display:flex;
-    align-items:center;
-    justify-content:center;
+    align-items: center;
+    flex-direction:column;
 
-    height: 100%;
+    height: 100vw;
     width: 100%;
     padding-top: 70px;
 
     background-color: #E5E5E5;
 
+    p {
+        margin-top: 28px;
+        width: 90%;
+        height: 74px;
+
+        font-size: 18px;
+        line-height: 22px;
+        color: #666666;
+    }
 
 `
 const Tittle = styled.div`
@@ -69,5 +135,95 @@ const Tittle = styled.div`
         border-radius: 4.63636px;
 
     }
+`
+const ContainerHabito = styled.div`
+
+    padding-bottom: 15px;
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction:column;
+
+    margin-top: 22px;
+    background-color:white;
+
+    width:90%;
+    height: 180px;
+
+    border-radius: 5px;
+
+    input {
+        margin-top: 18px;
+        width: 303px;
+        height: 45px;
+
+        background: #FFFFFF;
+        border: 1px solid #D5D5D5;
+        border-radius: 5px;
+    }
+`
+const ButtonCancel = styled.span`
+    display: flex;
+    align-items:center;
+    justify-content: center;
+
+    width: 69px;
+    height: 20px;
+
+    font-size: 16px;
+    color: #52B6FF;
+`
+const ButtonSave = styled.div`
+
+    margin-left: 23px;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+
+    width: 84px;
+    height: 35px;
+
+    font-size: 16px;
+    color: white;
+
+    background-color: #52B6FF;
+    border-radius: 4.63636px;
+`
+const ButttonDiv = styled.div`
+
+    margin-top: 29px;
+    width: 90%;
+    display: flex;
+    align-items:center;
+    justify-content: right;
+
+`
+const ContainerDias = styled.div`
+
+    margin-top: 8px;
+
+    display:flex;
+    align-items:left;
+    justify-content:left;
+
+    width:90%;
+`
+const InputDia = styled.div`
+
+    margin-right: 4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    width: 30px;
+    height: 30px;
+
+    background: #FFFFFF;
+    border: 1px solid #D5D5D5;
+    border-radius: 5px;
+
+    font-size: 20px;
+    color: #DBDBDB;
 `
 

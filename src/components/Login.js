@@ -58,7 +58,7 @@ export default function Login({footer, setFooter, menu, setMenu, user, setUser})
                 <div onClick={sendForm}>Login</div>
 
             </Formulario>
-            <p>Não tem uma conta? Cadastre-se!</p>
+            <p onClick={()=> {navigate("/cadastro")}}>Não tem uma conta? Cadastre-se!</p>
         </Container>
     )
 }
