@@ -6,24 +6,26 @@ import Dias from "./Dias"
 export default function Habitos({user, setUser}){
 
     console.log(user)
-    const [criarHabito, setCriarHabito] = useState(!false)
+    const [criarHabito, setCriarHabito] = useState(false)
     const [form, setForm] = useState({})
     const [dias, setDias] = useState([])
     const arr = ["D", "S", "T", "Q", "Q", "S", "S"]
 
     console.log(dias)
-
+    function CancelarHabito(){
+        setForm([])
+        setDias([])
+        setCriarHabito(!criarHabito)
+    }
     return (
         <Container>
             <Tittle> 
                 <h3>Meus hábitos</h3>
-                <div>+</div>
+                <div onClick={criarHabito ? (null):(() => setCriarHabito(true))}>+</div>
             </Tittle>
 
-            <ContainerHabito>
-
                 {criarHabito ? (
-                    <>
+                    <ContainerHabito>
                     <input placeholder="nome do hábito"></input>
 
                     <ContainerDias>
@@ -35,18 +37,15 @@ export default function Habitos({user, setUser}){
                     </ContainerDias>
 
                     <ButttonDiv>
-                        <ButtonCancel>Cancelar</ButtonCancel>
+                        <ButtonCancel onClick={CancelarHabito}>Cancelar</ButtonCancel>
                         <ButtonSave>Salvar</ButtonSave>
                     </ButttonDiv>
-                    </>
+                    </ContainerHabito>
 
                 ):(
                     <></>
                 )}
                 
-                
-            </ContainerHabito>
-
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
 
         </Container>

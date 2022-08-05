@@ -3,6 +3,8 @@ import styled from "styled-components"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import { ThreeDots } from  'react-loader-spinner'
+
 export default function Login({footer, setFooter, menu, setMenu, user, setUser}) {
 
     const [form, setForm] = useState({
@@ -10,6 +12,7 @@ export default function Login({footer, setFooter, menu, setMenu, user, setUser})
         password: ''      
     })
     const navigate = useNavigate()
+    const [carregar, setCarregar] = useState(false)
 
     function handleForm(e){
         setForm({
@@ -20,16 +23,20 @@ export default function Login({footer, setFooter, menu, setMenu, user, setUser})
     }
     function sendForm(){
         console.log(form)
-
+        
         const promisse = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',form)
         promisse.then(res => {
             sucesso(res.data)     
-        })     
+        })    
+        promisse.catch( () => teste()) 
+    }
+    function teste(){
+        console.log(carregar)
+        setCarregar(!carregar)
     }
     function sucesso(res){
 
         console.log(res)
-
         setUser({...user,
             email:res.email,
             id:res.id,
@@ -42,23 +49,31 @@ export default function Login({footer, setFooter, menu, setMenu, user, setUser})
         setFooter(!footer)
         setMenu(!menu)
     }
+    
     return(
 
 
-        <Container>
+        <Container opacity={() => carregar ? (0.5):(1)}>
 
             <img src={logo}></img>
 
-            <Formulario>
+            <Formulario click={() => carregar ? ("none"):("all")} opacity={() => carregar ? (0.5):(1)}>
                 
-                <input placeholder="email" name="email" onChange={handleForm} value={form.email} required></input>
+                <input placeholder="email" name="email" onChange={handleForm} value={form.email} required ></input>
 
                 <input placeholder="senha" name="password" onChange={handleForm} value={form.password} required></input>
 
-                <div onClick={sendForm}>Login</div>
+                <div onClick={sendForm}>
+                    { carregar  ? (
+                        <ThreeDots color="#FFFFFF" height={50} width={50} />
+                    ):(
+                        <>Login</>
+                    )}
+                </div>
 
             </Formulario>
             <p onClick={()=> {navigate("/cadastro")}}>Não tem uma conta? Cadastre-se!</p>
+            
         </Container>
     )
 }
@@ -70,6 +85,7 @@ const Container = styled.div`
     }
     p{
 
+        opacity: ${props => props.opacity};
         margin-top: 25px;
         width: 232px;
         height: 17px;
@@ -95,6 +111,8 @@ const Container = styled.div`
 `
 const Formulario = styled.form`
 
+    opacity: ${props => props.opacity};
+
     margin-top: 28px;
 
 
@@ -114,12 +132,15 @@ const Formulario = styled.form`
         border: 1px solid #D5D5D5;
 
         border-radius: 5px;
+        pointer-events:${(props) => props.click} !important;
 
     }
+    /*
     input::placeholder { 
         margin-left: 11px;
         color: #DBDBDB;
     }
+    */
 
     div{
 

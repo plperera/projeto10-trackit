@@ -12,8 +12,8 @@ import { useState } from "react"
 
 export default function App (){
 
-    const [menu, setMenu] = useState (!false)
-    const [footer, setFooter] = useState (!false)
+    const [menu, setMenu] = useState (false)
+    const [footer, setFooter] = useState (false)
     const [user, setUser] = useState ({
         email: '',
         id: '',

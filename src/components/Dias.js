@@ -10,9 +10,9 @@ export default function Dias ({dia, i, dias, setDias}){
         setClicou(!clicou)
 
         if (!clicou) {
-            setDias([...dias, dia])
+            setDias([...dias, i])
         } else {
-            setDias(dias.filter((arr) => arr !== dia))
+            setDias(dias.filter((arr) => arr !== i))
         }
         
     }
