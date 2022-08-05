@@ -9,6 +9,9 @@ export default function Habitos({user, setUser}){
     const [criarHabito, setCriarHabito] = useState(!false)
     const [form, setForm] = useState({})
     const [dias, setDias] = useState([])
+    const arr = ["D", "S", "T", "Q", "Q", "S", "S"]
+
+    console.log(dias)
 
     return (
         <Container>
@@ -25,33 +28,9 @@ export default function Habitos({user, setUser}){
 
                     <ContainerDias>
 
-                        <InputDia>
-                            <Dias dia="D" i="0"/>
-                        </InputDia>
-
-                        <InputDia>
-                            <Dias dia="S" i="1"/>
-                        </InputDia>
-
-                        <InputDia>
-                            <Dias dia="T" i="2"/>
-                        </InputDia>
-
-                        <InputDia>
-                            <Dias dia="Q" i="3"/>
-                        </InputDia>
-
-                        <InputDia>
-                            <Dias dia="Q" i="4"/>
-                        </InputDia>
-
-                        <InputDia>
-                            <Dias dia="S" i="5"/>
-                        </InputDia>
-
-                        <InputDia>
-                            <Dias dia="S" i="6"/>
-                        </InputDia>
+                       {arr.map((dia, i) => 
+                            <Dias dia={dia} i={i} key={i} dias={dias} setDias={setDias}/>                           
+                       )}
 
                     </ContainerDias>
 
@@ -208,22 +187,5 @@ const ContainerDias = styled.div`
     justify-content:left;
 
     width:90%;
-`
-const InputDia = styled.div`
-
-    margin-right: 4px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    width: 30px;
-    height: 30px;
-
-    background: #FFFFFF;
-    border: 1px solid #D5D5D5;
-    border-radius: 5px;
-
-    font-size: 20px;
-    color: #DBDBDB;
 `
 
