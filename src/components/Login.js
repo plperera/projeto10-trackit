@@ -28,12 +28,21 @@ export default function Login({footer, setFooter, menu, setMenu, user, setUser})
         promisse.then(res => {
             sucesso(res.data)     
         })    
-        promisse.catch( () => teste()) 
+        promisse.catch( () => erro()) 
     }
-    function teste(){
+    function erro(){
         console.log(carregar)
         setCarregar(!carregar)
+
+        setTimeout(() => {
+
+            console.log(carregar)
+            setCarregar(false)
+
+          }, 2000);
+
     }
+    
     function sucesso(res){
 
         console.log(res)
@@ -57,7 +66,7 @@ export default function Login({footer, setFooter, menu, setMenu, user, setUser})
 
             <img src={logo}></img>
 
-            <Formulario click={() => carregar ? ("none"):("all")} opacity={() => carregar ? (0.5):(1)}>
+            <Formulario clicou={() => carregar ? ("none"):("all")} opacity={() => carregar ? (0.5):(1)}>
                 
                 <input placeholder="email" name="email" onChange={handleForm} value={form.email} required ></input>
 
@@ -132,7 +141,7 @@ const Formulario = styled.form`
         border: 1px solid #D5D5D5;
 
         border-radius: 5px;
-        pointer-events:${(props) => props.click} !important;
+        pointer-events:${(props) => props.clicou} !important;
 
     }
     /*
@@ -144,6 +153,7 @@ const Formulario = styled.form`
 
     div{
 
+        pointer-events: ${(props) => props.clicou} !important;
         margin-top: 6px;
 
         font-size: 21px;
