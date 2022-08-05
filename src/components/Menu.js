@@ -1,20 +1,23 @@
 import styled from "styled-components"
 
-export default function Menu ({menu, setMenu}){
+export default function Menu ({menu, setMenu, user, setUser}){
 
     let display = menu ? ("flex"):("none")
 
     return (
         <Container display={display}>
             <h1>TrackIt</h1>
-            <img src="https://uploads-ssl.webflow.com/602d151a812ce93ee387ebe5/624763a85861ff0bf6d28fd1_Cachorro%20pode%20ter%20autismo.jpeg"/>
+            <img src={user.image}/>
         </Container>
     )
 }
 
 const Container = styled.div`
 
+    @import url('https://fonts.googleapis.com/css2?family=Playball&family=Recursive:wght@300;400;500;600;700&display=swap');
+    
     position: fixed;
+    top:0;
 
     width: 100%;
     height: 70px;
@@ -38,9 +41,8 @@ const Container = styled.div`
     }
 
     h1{
-        @import url('https://fonts.googleapis.com/css2?family=Playball&family=Recursive:wght@300;400;500;600;700&display=swap');
-        font-family: 'Playball', cursive;
-        font-family: 'Recursive', sans-serif;
+        font-family: 'Playball';
+        font-style: normal;
 
 
         font-size: 38.982px;

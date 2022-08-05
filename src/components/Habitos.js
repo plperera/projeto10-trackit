@@ -1,6 +1,8 @@
 import styled from "styled-components"
 
-export default function Habitos(){
+export default function Habitos({user, setUser}){
+
+    console.log(user)
 
     return (
         <Container>

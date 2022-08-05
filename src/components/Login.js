@@ -1,28 +1,85 @@
 import logo from "../img/logo.svg"
 import styled from "styled-components"
-export default function Login() {
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+export default function Login({footer, setFooter, menu, setMenu, user, setUser}) {
 
+    const [form, setForm] = useState({
+        email:'',
+        password: ''      
+    })
+    const navigate = useNavigate()
+
+    function handleForm(e){
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+
+    }
+    function sendForm(){
+        console.log(form)
+
+        const promisse = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',form)
+        promisse.then(res => {
+            sucesso(res.data)     
+        })     
+    }
+    function sucesso(res){
+
+        console.log(res)
+
+        setUser({...user,
+            email:res.email,
+            id:res.id,
+            name:res.name,
+            image:res.image,
+            password:res.password,
+            token:res.token
+        })
+        navigate("/habitos")
+        setFooter(!footer)
+        setMenu(!menu)
+    }
     return(
+
+
         <Container>
 
             <img src={logo}></img>
 
             <Formulario>
                 
-                <input required></input>
+                <input placeholder="email" name="email" onChange={handleForm} value={form.email} required></input>
 
-                <input required></input>
+                <input placeholder="senha" name="password" onChange={handleForm} value={form.password} required></input>
 
-                <div>Entrar</div>
+                <div onClick={sendForm}>Login</div>
 
             </Formulario>
-            
             <p>Não tem uma conta? Cadastre-se!</p>
-
         </Container>
     )
 }
 const Container = styled.div`
+
+    img{
+        width:180px;
+        height:180px;
+    }
+    p{
+
+        margin-top: 25px;
+        width: 232px;
+        height: 17px;
+
+        font-size: 14px;
+        text-decoration-line: underline;
+        color: #52B6FF;
+
+        text-align:center;
+    }
 
     margin-top: 68px;
 
@@ -34,19 +91,7 @@ const Container = styled.div`
     width:100%;
     height:100%;
 
-    p{
-        margin-top: 25px;
-        width: 232px;
-        height: 17px;
-
-        font-size: 14px;
-        text-decoration-line: underline;
-        color: #52B6FF;
-    }
-    img{
-        width:180px;
-        height:180px;
-    }
+    
 `
 const Formulario = styled.form`
 
@@ -71,6 +116,11 @@ const Formulario = styled.form`
         border-radius: 5px;
 
     }
+    input::placeholder { 
+        margin-left: 11px;
+        color: #DBDBDB;
+    }
+
     div{
 
         margin-top: 6px;
