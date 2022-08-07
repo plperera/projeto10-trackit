@@ -3,6 +3,8 @@ import styled from "styled-components"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import { ThreeDots } from  'react-loader-spinner'
+
 export default function Cadastro() {
 
     const [form, setForm] = useState({
@@ -11,6 +13,7 @@ export default function Cadastro() {
         image: '',
         password: ''      
     })
+    const [carregar, setCarregar] = useState(false)
     const navigate = useNavigate()
 
     function handleForm(e){
@@ -18,25 +21,35 @@ export default function Cadastro() {
             ...form,
             [e.target.name]: e.target.value
         })
-
     }
     function sendForm(){
         console.log(form)
+        setCarregar(!carregar)
         
         const promisse = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', form)
-        promisse.then(res => {console.log(res.data)})
+        promisse.then(res => {sucesso()})
+        promisse.catch( () => erro())         
 
+    }
+    function sucesso (){
         navigate("/")
+    }
+    function erro (){
+        setTimeout(() => {
+
+            setCarregar(false)
+
+          }, 2000);
 
     }
     return(
 
 
-        <Container>
+        <Container opacity={() => carregar ? (0.5):(1)}>
 
             <img src={logo}></img>
 
-            <Formulario>
+            <Formulario opacity={() => carregar ? (0.5):(1)} clicou={() => carregar ? ("none"):("all")}>
                 
                 <input placeholder="email" name="email" onChange={handleForm} value={form.email} required></input>
 
@@ -46,7 +59,13 @@ export default function Cadastro() {
 
                 <input placeholder="foto" name="image" onChange={handleForm} value={form.image} required></input>
 
-                <div onClick={sendForm}>Cadastrar</div>
+                <div onClick={sendForm}>
+                    { carregar  ? (
+                        <ThreeDots color="#FFFFFF" height={50} width={50} />
+                    ):(
+                        <>Cadastrar</>
+                    )}
+                </div>
 
             </Formulario>
             <p onClick={()=> {navigate("/")}}>Já tem uma conta? Faça login!</p>
@@ -60,7 +79,7 @@ const Container = styled.div`
         height:180px;
     }
     p{
-
+        opacity: ${props => props.opacity};
         margin-top: 25px;
         width: 232px;
         height: 17px;
@@ -86,6 +105,7 @@ const Container = styled.div`
 `
 const Formulario = styled.form`
 
+    opacity: ${props => props.opacity};
     margin-top: 28px;
 
 
@@ -103,6 +123,7 @@ const Formulario = styled.form`
 
         background-color: #FFFFFF;
         border: 1px solid #D5D5D5;
+        pointer-events:${(props) => props.clicou} !important;
 
         border-radius: 5px;
 
@@ -126,5 +147,6 @@ const Formulario = styled.form`
         height: 45px;
         background-color: #52B6FF;
         border-radius: 5px;
+        pointer-events:${(props) => props.clicou} !important;
     }
 `

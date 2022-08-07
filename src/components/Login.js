@@ -23,20 +23,16 @@ export default function Login({footer, setFooter, menu, setMenu, user, setUser})
     }
     function sendForm(){
         console.log(form)
-        
+        setCarregar(!carregar)     
+           
         const promisse = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',form)
-        promisse.then(res => {
-            sucesso(res.data)     
-        })    
+        promisse.then(res => {sucesso(res.data)})    
         promisse.catch( () => erro()) 
     }
     function erro(){
-        console.log(carregar)
-        setCarregar(!carregar)
 
         setTimeout(() => {
 
-            console.log(carregar)
             setCarregar(false)
 
           }, 2000);

@@ -1,22 +1,55 @@
 import styled from "styled-components"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import axios from "axios"
 
 import Dias from "./Dias"
 
 export default function Habitos({user, setUser}){
 
     console.log(user)
+
     const [criarHabito, setCriarHabito] = useState(false)
-    const [form, setForm] = useState({})
+    const [form, setForm] = useState({
+        name:""
+    })
     const [dias, setDias] = useState([])
+    const [habito, setHabito] = useState([])
+
     const arr = ["D", "S", "T", "Q", "Q", "S", "S"]
 
-    console.log(dias)
+    useEffect(() => {
+        const config = {
+            headers: {
+                Authorization: 'Bearer '+ user.token
+            }
+        }
+        const promisse = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
+        promisse.then((res) => {console.log(res.data)})
+    }, [])
+
     function CancelarHabito(){
         setForm([])
         setDias([])
         setCriarHabito(!criarHabito)
     }
+    function sendForm(){
+        if (dias.length > 0 && form.name !== ""){
+            const habito = {
+                name: form,
+                days: dias
+            }
+
+        const promisse = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', habito)    
+        
+        } else console.log("foi n")
+    }
+    function handleForm(e){
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+
     return (
         <Container>
             <Tittle> 
@@ -25,22 +58,25 @@ export default function Habitos({user, setUser}){
             </Tittle>
 
                 {criarHabito ? (
-                    <ContainerHabito>
-                    <input placeholder="nome do hábito"></input>
+                    <FormHabito>
+                        <input placeholder="nome do hábito" name="name" onChange={handleForm} required></input>
 
-                    <ContainerDias>
+                        <ContainerDias>
 
-                       {arr.map((dia, i) => 
-                            <Dias dia={dia} i={i} key={i} dias={dias} setDias={setDias}/>                           
-                       )}
+                            {arr.map((dia, i) => 
+                                    <Dias dia={dia} i={i} key={i} dias={dias} setDias={setDias}/>                           
+                            )}
 
-                    </ContainerDias>
+                        </ContainerDias>
 
-                    <ButttonDiv>
-                        <ButtonCancel onClick={CancelarHabito}>Cancelar</ButtonCancel>
-                        <ButtonSave>Salvar</ButtonSave>
-                    </ButttonDiv>
-                    </ContainerHabito>
+                        <ButttonDiv>
+
+                            <ButtonCancel onClick={CancelarHabito}>Cancelar</ButtonCancel>
+
+                            <ButtonSave onClick={sendForm}>Salvar</ButtonSave>
+
+                        </ButttonDiv>
+                    </FormHabito>
 
                 ):(
                     <></>
@@ -58,12 +94,12 @@ const Container = styled.div`
     align-items: center;
     flex-direction:column;
 
-    height: 100vw;
+    height: 667px;
     width: 100%;
     padding-top: 70px;
 
     background-color: #E5E5E5;
-
+    
     p {
         margin-top: 28px;
         width: 90%;
@@ -114,7 +150,7 @@ const Tittle = styled.div`
 
     }
 `
-const ContainerHabito = styled.div`
+const FormHabito = styled.form`
 
     padding-bottom: 15px;
 
