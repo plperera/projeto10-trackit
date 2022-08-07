@@ -13,24 +13,26 @@ export default function Habitos({user, setUser}){
     })
     const [dias, setDias] = useState([])
     const [lista, setLista] = useState([])
+    const [changes, setChanges] = useState(0)
 
-    const arr = ["D", "S", "T", "Q", "Q", "S", "S"]
     
+    const arr = ["D", "S", "T", "Q", "Q", "S", "S"]
     const config = {
         headers: {
             Authorization: 'Bearer '+ user.token
         }
     }
-    console.log(lista)
+
     useEffect(() => {
         const promisse = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
         promisse.then((res) => {setLista(res.data)})
-    }, [])
+    }, [changes])
 
     function CancelarHabito(){
         setForm([])
         setDias([])
         setCriarHabito(!criarHabito)
+        setChanges(changes + 1)
     }
     function sendForm(){
         if (dias.length > 0 && form.name !== ""){
@@ -40,7 +42,7 @@ export default function Habitos({user, setUser}){
                 days: dias
             }
         const promisse = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', body, config)
-        promisse.then(console.log("foi"))
+        promisse.then(CancelarHabito)
         
         } else console.log("foi n")
     }
@@ -91,6 +93,11 @@ export default function Habitos({user, setUser}){
                         days={arr.days}
                         key={i}
                         i={i}
+                        id={arr.id}
+                        user={user} 
+                        setUser={setUser}
+                        setChanges={setChanges}
+                        changes={changes}
                     />                   
                 )
 
@@ -109,9 +116,10 @@ const Container = styled.div`
     align-items: center;
     flex-direction:column;
 
-    height: 667px;
+    height: 100%;
     width: 100%;
     padding-top: 70px;
+    padding-bottom: 90px;
 
     background-color: #E5E5E5;
     

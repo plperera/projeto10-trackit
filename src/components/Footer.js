@@ -1,9 +1,10 @@
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom";
 
 import Progreso from "./Progresso";
 
 export default function Footer ({footer, setFooter}){
-
+    const navigate = useNavigate()
     let display = footer ? ("flex"):("none")
 
     return (

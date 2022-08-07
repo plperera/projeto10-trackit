@@ -1,15 +1,32 @@
 import styled from "styled-components"
+import trash from "../img/trash.png"
+import axios from "axios"
+import { useState } from "react"
 
-export default function ListaDeHabitos ({name, days, i}) {
+export default function ListaDeHabitos ({name, days, i, id, user, setUser, changes, setChanges}) {
     const arr = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 
-    console.log("testeeeeeeeeeeeeee")
+    const config = {
+        headers: {
+            Authorization: 'Bearer '+ user.token
+        }
+    }
+
     function verifySelect (dia, i, days){
 
         if (days.filter((a)=> a === i).length > 0){
             return <DivDaySelect>{dia}</DivDaySelect>
         }
         else return <DivDay>{dia}</DivDay>
+    }
+    function Delete(){
+        console.log(id)
+        console.log(config)
+
+        const promisse = axios.delete('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/'+id, config)
+        .then(() => setChanges(changes + 1))
+        .catch(res => console.log(res))
+
     }
     return(
         <Container>
@@ -21,7 +38,7 @@ export default function ListaDeHabitos ({name, days, i}) {
                 )}               
                     
             </DaysList>
-            <div></div>
+            <img src={trash} onClick={Delete}/>
         </Container>
     )
 }
@@ -37,6 +54,16 @@ const Container = styled.div`
 
     background-color: #FFFFFF;
     border-radius: 5px;
+
+    position:relative;
+
+    img {
+    
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        
+    }
 `
 const Tittle = styled.div`
     margin-top:13px;
