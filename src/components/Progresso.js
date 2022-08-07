@@ -1,12 +1,13 @@
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components"
 
 
 export default function Progreso ({pocentagem}) {
-    
+    const navigate = useNavigate()
     return(
-        <Teste>
+        <Container onClick={() => navigate("/hoje")}>
             <CircularProgressbar
             value={pocentagem}
             text={``}
@@ -21,10 +22,10 @@ export default function Progreso ({pocentagem}) {
             })}
             />
             <p>Hoje</p>
-        </Teste>
+        </Container>
     )
 }
-const Teste = styled.div`
+const Container = styled.div`
 
     width: 91px;
     height: 91px;

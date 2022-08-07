@@ -10,11 +10,11 @@ export default function Footer ({footer, setFooter}){
     return (
         <Container display={display}>
 
-            <h3>Hábitos</h3>
+            <h3 onClick={() => navigate("/habitos")}>Hábitos</h3>
       
             <Progreso pocentagem={70}/>
            
-            <h3>Histórico</h3>
+            <h3 onClick={() => navigate("/historico")}>Histórico</h3>
 
         </Container>
     )
