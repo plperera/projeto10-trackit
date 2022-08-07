@@ -3,28 +3,28 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 
 import Dias from "./Dias"
+import ListaDeHabitos from "./ListaDeHabitos"
 
 export default function Habitos({user, setUser}){
-
-    console.log(user)
 
     const [criarHabito, setCriarHabito] = useState(false)
     const [form, setForm] = useState({
         name:""
     })
     const [dias, setDias] = useState([])
-    const [habito, setHabito] = useState([])
+    const [lista, setLista] = useState([])
 
     const arr = ["D", "S", "T", "Q", "Q", "S", "S"]
-
-    useEffect(() => {
-        const config = {
-            headers: {
-                Authorization: 'Bearer '+ user.token
-            }
+    
+    const config = {
+        headers: {
+            Authorization: 'Bearer '+ user.token
         }
+    }
+    console.log(lista)
+    useEffect(() => {
         const promisse = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
-        promisse.then((res) => {console.log(res.data)})
+        promisse.then((res) => {setLista(res.data)})
     }, [])
 
     function CancelarHabito(){
@@ -34,12 +34,13 @@ export default function Habitos({user, setUser}){
     }
     function sendForm(){
         if (dias.length > 0 && form.name !== ""){
-            const habito = {
-                name: form,
+
+            const body = {
+                name: form.name,
                 days: dias
             }
-
-        const promisse = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', habito)    
+        const promisse = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', body, config)
+        promisse.then(console.log("foi"))
         
         } else console.log("foi n")
     }
@@ -81,8 +82,22 @@ export default function Habitos({user, setUser}){
                 ):(
                     <></>
                 )}
-                
-            <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+
+            {lista.length > 0 ? (
+
+                lista.map((arr, i) => 
+                    <ListaDeHabitos
+                        name={arr.name}
+                        days={arr.days}
+                        key={i}
+                        i={i}
+                    />                   
+                )
+
+                ):(
+                    <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+            )}  
+            
 
         </Container>
     )
