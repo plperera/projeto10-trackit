@@ -54,7 +54,10 @@ export default function App (){
                        setUser={setUser} 
                     />} />
 
-                    <Route path="/hoje" element={<Hoje />} />
+                    <Route path="/hoje" element={<Hoje 
+                        user={user}
+                        setUser={setUser}
+                    />} />
 
                     <Route path="/historico" element={<Historico />} />
 
