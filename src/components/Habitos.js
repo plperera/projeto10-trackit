@@ -116,7 +116,7 @@ const Container = styled.div`
     align-items: center;
     flex-direction:column;
 
-    height: 100%;
+    height: 100vh;
     width: 100%;
     padding-top: 70px;
     padding-bottom: 90px;

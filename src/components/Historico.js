@@ -10,9 +10,12 @@ export default function Historico() {
 }
 const Container = styled.div`
 
+    height:100vh;
+    width:100%;
+    background-color: #E5E5E5;
+
     display:flex;
     align-items:left;
-    justify-content:center;
     flex-direction:column;
 
     padding-top: 70px;

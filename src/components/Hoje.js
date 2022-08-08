@@ -3,9 +3,10 @@ import styled from "styled-components"
 import { useState, useEffect } from "react"
 import check from "../img/check.svg"
 import ListaDeChecks from "./ListaDeChecks"
+import dayjs from "dayjs"
 
 export default function Hoje({user, setUser}) {
-
+   
     const [lista, setLista] = useState(undefined)
     const config = {
         headers: {
@@ -17,9 +18,21 @@ export default function Hoje({user, setUser}) {
         promisse.then(res => setLista(res.data))
     }, [])
     console.log(lista)
+    function WeekDay (dia){
+        switch (dia) {
+            case 0: return "Domingo"
+            case 1: return "Segunda"
+            case 2: return "Terça"
+            case 3: return "Quarta"
+            case 4: return "Quinta"
+            case 5: return "Sexta"
+            case 6: return "Sabado"
+            default: return ""
+        }
+    }
     return(
         <Container>
-            <h3>Segunda, 17/05</h3>
+            <h3>{WeekDay(dayjs().locale('pt-br').$W)}, {dayjs().locale('pt-br').format('DD/MM')}</h3>
             <p>Nenhum hábito concluído ainda</p>
 
             {lista === undefined ? (<></>):(
@@ -41,12 +54,12 @@ export default function Hoje({user, setUser}) {
 }
 
 const Container = styled.div`
-    height:100%;
     width:100%;
-    
+    height:100vh;
+    background-color: #E5E5E5;
+
     display:flex;
     align-items:left;
-    justify-content:center;
     flex-direction:column;
 
     padding-top: 70px;

@@ -6,6 +6,7 @@ import Login from "./Login"
 import Cadastro from "./Cadastro"
 import Hoje from "./Hoje"
 import { Container } from "./styles"
+import Teste from "./Teste"
 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { useState } from "react"
@@ -60,6 +61,8 @@ export default function App (){
                     />} />
 
                     <Route path="/historico" element={<Historico />} />
+                    <Route path="/teste" element={<Teste />} />
+
 
                 </Routes>
 
