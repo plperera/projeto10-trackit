@@ -8,6 +8,8 @@ import dayjs from "dayjs"
 export default function Hoje({user, setUser}) {
    
     const [lista, setLista] = useState(undefined)
+    const [tapped, setTapped] = useState(0)
+
     const config = {
         headers: {
             Authorization: 'Bearer ' + user.token
@@ -16,7 +18,8 @@ export default function Hoje({user, setUser}) {
     useEffect (() => {
         const promisse = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
         promisse.then(res => setLista(res.data))
-    }, [])
+    }, [tapped])
+    
     console.log(lista)
     function WeekDay (dia){
         switch (dia) {
@@ -41,9 +44,12 @@ export default function Hoje({user, setUser}) {
                     <ListaDeChecks 
                         id={arr.id} 
                         name={arr.name} 
-                        done={arr.name} 
+                        done={arr.done} 
                         currentSequence={arr.currentSequence} 
                         highestSequence={arr.highestSequence} 
+                        user={user}
+                        tapped={tapped}
+                        setTapped={setTapped}
                     />      
                 )
             )}

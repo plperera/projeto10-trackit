@@ -61,7 +61,7 @@ export default function App (){
                     />} />
 
                     <Route path="/historico" element={<Historico />} />
-                    <Route path="/teste" element={<Teste />} />
+                    {/* <Route path="/teste" element={<Teste />} /> */}
 
 
                 </Routes>

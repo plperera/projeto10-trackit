@@ -3,18 +3,31 @@ import styled from "styled-components"
 import { useState } from "react"
 import check from "../img/check.svg"
 
-export default function ListaDeChecks ({id, name, done, currentSequence, highestSequence}){
+export default function ListaDeChecks ({id, name, done, currentSequence, highestSequence, user, tapped, setTapped}){
+    const config = {
+        headers: {
+            Authorization: 'Bearer ' + user.token
+        }
+    }
+    const linkApi = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/'+id+'/'+ (done ? ('uncheck'):('check'))
+    console.log(linkApi)
 
-    const [tapped, setTapped] = useState(!done)
+    function clicked(){
+
+        const promisse = axios.post(linkApi, config)
+        promisse.then(setTapped(tapped + 1))
+        promisse.catch(res => console.log(res))
+        
+    }
 
     return(
         <Container>
             <div>
                 <h4>{name}</h4>
-                <h5>Sequência atual: <Green color={()=>tapped ? ("#8FC549"):("#666666")}>{currentSequence} dias</Green></h5>
+                <h5>Sequência atual: <Green color={()=>done ? ("#8FC549"):("#666666")}>{currentSequence} dias</Green></h5>
                 <h5>Seu recorde: {highestSequence} dias</h5>
             </div>
-            <ButtonCheck onClick={() => setTapped(!tapped)} background={()=>tapped ? ("#8FC549"):("#EBEBEB")} border={()=>tapped ? ("none"):("1px solid #E7E7E7")}>
+            <ButtonCheck onClick={clicked} background={()=>done ? ("#8FC549"):("#EBEBEB")} border={()=>done ? ("none"):("1px solid #E7E7E7")}>
                 <img src={check}/>
             </ButtonCheck>   
         </Container>
