@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import { useState, useEffect } from "react"
 import axios from "axios"
+import { ThreeDots } from  'react-loader-spinner'
+
 
 import Dias from "./Dias"
 import ListaDeHabitos from "./ListaDeHabitos"
@@ -14,6 +16,7 @@ export default function Habitos({user, setUser}){
     const [dias, setDias] = useState([])
     const [lista, setLista] = useState([])
     const [changes, setChanges] = useState(0)
+    const [carregar, setCarregar] = useState(false)
 
     
     const arr = ["D", "S", "T", "Q", "Q", "S", "S"]
@@ -32,10 +35,13 @@ export default function Habitos({user, setUser}){
         setForm([])
         setDias([])
         setCriarHabito(!criarHabito)
+        setCarregar(false)        
         setChanges(changes + 1)
     }
     function sendForm(){
         if (dias.length > 0 && form.name !== ""){
+
+            setCarregar(!false)
 
             const body = {
                 name: form.name,
@@ -43,8 +49,16 @@ export default function Habitos({user, setUser}){
             }
         const promisse = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', body, config)
         promisse.then(CancelarHabito)
+            .catch(erro)
         
         } else console.log("foi n")
+    }
+    function erro(){
+        setTimeout(() => {
+
+            setCarregar(false)
+
+          }, 2000);
     }
     function handleForm(e){
         setForm({
@@ -61,7 +75,7 @@ export default function Habitos({user, setUser}){
             </Tittle>
 
                 {criarHabito ? (
-                    <FormHabito>
+                    <FormHabito opacity={carregar ? (0.5):(1)} pointer={carregar ? ("none"):("all")}>
                         <input placeholder="nome do hábito" name="name" onChange={handleForm} required></input>
 
                         <ContainerDias>
@@ -76,7 +90,9 @@ export default function Habitos({user, setUser}){
 
                             <ButtonCancel onClick={CancelarHabito}>Cancelar</ButtonCancel>
 
-                            <ButtonSave onClick={sendForm}>Salvar</ButtonSave>
+                            <ButtonSave onClick={sendForm}>
+                                {carregar ? (<ThreeDots color="#FFFFFF" height={35} width={35} />):(<>Salvar</>)}
+                            </ButtonSave>
 
                         </ButttonDiv>
                     </FormHabito>
@@ -88,6 +104,7 @@ export default function Habitos({user, setUser}){
             {lista.length > 0 ? (
 
                 lista.map((arr, i) => 
+                <div>
                     <ListaDeHabitos
                         name={arr.name}
                         days={arr.days}
@@ -98,18 +115,15 @@ export default function Habitos({user, setUser}){
                         setUser={setUser}
                         setChanges={setChanges}
                         changes={changes}
-                    />                   
+                    />   
+                </div>              
                 )
-
                 ):(
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             )}  
-            
-
         </Container>
     )
 }
-
 const Container = styled.div`
 
     display:flex;
@@ -175,6 +189,9 @@ const Tittle = styled.div`
 `
 const FormHabito = styled.form`
 
+    pointer-events:${(props) => props.pointer} !important;
+    opacity: ${props => props.opacity};
+
     padding-bottom: 15px;
 
     display:flex;
@@ -201,6 +218,7 @@ const FormHabito = styled.form`
     }
 `
 const ButtonCancel = styled.span`
+
     display: flex;
     align-items:center;
     justify-content: center;

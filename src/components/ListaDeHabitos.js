@@ -15,9 +15,9 @@ export default function ListaDeHabitos ({name, days, i, id, user, setUser, chang
     function verifySelect (dia, i, days){
 
         if (days.filter((a)=> a === i).length > 0){
-            return <DivDaySelect>{dia}</DivDaySelect>
+            return <DivDaySelect key={i}>{dia}</DivDaySelect>
         }
-        else return <DivDay>{dia}</DivDay>
+        else return <DivDay key={i}>{dia}</DivDay>
     }
     function Delete(){
         console.log(id)
@@ -28,18 +28,18 @@ export default function ListaDeHabitos ({name, days, i, id, user, setUser, chang
         .catch(res => console.log(res))
 
     }
-    return(
-        <Container>
-            <Tittle>{name}</Tittle>
-            <DaysList>
+    return(  
+            <Container>
+                <Tittle>{name}</Tittle>
+                <DaysList>
 
-                {arr.map((dia, i) =>
-                verifySelect(dia,i,days)
-                )}               
-                    
-            </DaysList>
-            <img src={trash} onClick={Delete}/>
-        </Container>
+                    {arr.map((dia, i) =>
+                    verifySelect(dia,i,days)
+                    )}               
+                        
+                </DaysList>
+                <img src={trash} onClick={Delete}/>
+            </Container>
     )
 }
 const Container = styled.div`

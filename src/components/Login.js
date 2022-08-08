@@ -30,17 +30,13 @@ export default function Login({footer, setFooter, menu, setMenu, user, setUser})
         promisse.catch( () => erro()) 
     }
     function erro(){
-
         setTimeout(() => {
 
             setCarregar(false)
 
           }, 2000);
-
-    }
-    
+    }  
     function sucesso(res){
-
         console.log(res)
         setUser({...user,
             email:res.email,
@@ -54,7 +50,6 @@ export default function Login({footer, setFooter, menu, setMenu, user, setUser})
         setFooter(!footer)
         setMenu(!menu)
     }
-    
     return(
 
 

@@ -15,6 +15,8 @@ export default function App (){
 
     const [menu, setMenu] = useState (false)
     const [footer, setFooter] = useState (false)
+    const [checkAmount, setCheckAmount] = useState(0)
+    const [tapped, setTapped] = useState(false)
     const [user, setUser] = useState ({
         email: '',
         id: '',
@@ -58,6 +60,10 @@ export default function App (){
                     <Route path="/hoje" element={<Hoje 
                         user={user}
                         setUser={setUser}
+                        checkAmount={checkAmount}
+                        setCheckAmount={setCheckAmount}
+                        tapped={tapped}
+                        setTapped={setTapped}
                     />} />
 
                     <Route path="/historico" element={<Historico />} />
@@ -69,6 +75,11 @@ export default function App (){
                 <Footer
                     footer={footer}
                     setFooter={setFooter}
+                    checkAmount={checkAmount}
+                    setCheckAmount={setCheckAmount}
+                    tapped={tapped}
+                    setTapped={setTapped}
+                    user={user}
                 />
 
             </BrowserRouter>
@@ -76,3 +87,4 @@ export default function App (){
         </Container>
     )
 }
+

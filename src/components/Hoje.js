@@ -5,22 +5,24 @@ import check from "../img/check.svg"
 import ListaDeChecks from "./ListaDeChecks"
 import dayjs from "dayjs"
 
-export default function Hoje({user, setUser}) {
+export default function Hoje({user,tapped,setTapped, checkAmount, setCheckAmount}) {
    
     const [lista, setLista] = useState(undefined)
-    const [tapped, setTapped] = useState(0)
-
     const config = {
         headers: {
             Authorization: 'Bearer ' + user.token
         }
     }
     useEffect (() => {
+        
         const promisse = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
-        promisse.then(res => setLista(res.data))
+        promisse.then(res => success(res))
+        
     }, [tapped])
-    
-    console.log(lista)
+
+    function success(res){
+        setLista(res.data) 
+    }
     function WeekDay (dia){
         switch (dia) {
             case 0: return "Domingo"
@@ -36,10 +38,10 @@ export default function Hoje({user, setUser}) {
     return(
         <Container>
             <h3>{WeekDay(dayjs().locale('pt-br').$W)}, {dayjs().locale('pt-br').format('DD/MM')}</h3>
-            <p>Nenhum hábito concluído ainda</p>
+            {checkAmount > 0 ? (<Green>{(checkAmount*100).toFixed(0)}% dos hábitos concluídos</Green>):(<p>Nenhum hábito concluído ainda</p>)}
 
             {lista === undefined ? (<></>):(
-                lista.map((arr)=>
+                lista.map((arr, i)=>
 
                     <ListaDeChecks 
                         id={arr.id} 
@@ -50,11 +52,9 @@ export default function Hoje({user, setUser}) {
                         user={user}
                         tapped={tapped}
                         setTapped={setTapped}
-                    />      
-                )
+                        key={i}
+                    />)
             )}
-            
-
         </Container>
     )
 }
@@ -80,5 +80,10 @@ const Container = styled.div`
         font-size:18px;
         color:#BABABA;
         margin-left: 17px;
+        margin-top: 3px;
+        margin-bottom: 18px;
     }
+`
+const Green = styled.p`
+    color:#8FC549 !important;
 `

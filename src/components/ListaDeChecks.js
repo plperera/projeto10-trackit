@@ -2,6 +2,8 @@ import axios from "axios"
 import styled from "styled-components"
 import { useState } from "react"
 import check from "../img/check.svg"
+import { ThreeDots } from  'react-loader-spinner'
+
 
 export default function ListaDeChecks ({id, name, done, currentSequence, highestSequence, user, tapped, setTapped}){
     const config = {
@@ -9,26 +11,35 @@ export default function ListaDeChecks ({id, name, done, currentSequence, highest
             Authorization: 'Bearer ' + user.token
         }
     }
+    const body = {}
     const linkApi = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/'+id+'/'+ (done ? ('uncheck'):('check'))
-    console.log(linkApi)
-
+    const [carregar, setCarregar] = useState(false)
     function clicked(){
 
-        const promisse = axios.post(linkApi, config)
-        promisse.then(setTapped(tapped + 1))
-        promisse.catch(res => console.log(res))
-        
+        setCarregar(!carregar)
+        const promisse = axios.post(linkApi, body, config)
+            .then(success)
+            .catch(erro)
     }
-
+    function success(){
+        setTapped(!tapped)
+        setCarregar(false)
+    }
+    function erro(){
+        setTapped(!tapped)
+        setCarregar(false)
+    }
     return(
-        <Container>
+        <Container opacity={carregar ? (0.5):(1)} pointer={carregar ? ("none"):("all")}>
             <div>
                 <h4>{name}</h4>
                 <h5>Sequência atual: <Green color={()=>done ? ("#8FC549"):("#666666")}>{currentSequence} dias</Green></h5>
                 <h5>Seu recorde: {highestSequence} dias</h5>
             </div>
             <ButtonCheck onClick={clicked} background={()=>done ? ("#8FC549"):("#EBEBEB")} border={()=>done ? ("none"):("1px solid #E7E7E7")}>
-                <img src={check}/>
+                
+                {carregar ? (<ThreeDots color="#FFFFFF" height={35} width={35} />):(<img src={check}/>)}
+
             </ButtonCheck>   
         </Container>
     )
@@ -45,8 +56,9 @@ const Container = styled.div`
     justify-content:space-between;
 
     margin-top:10px;
-
     background-color:white;
+    pointer-events:${(props) => props.pointer};
+    opacity:${(props) => props.opacity};
     h4 {
         font-size:20px;
         color:#666666;
