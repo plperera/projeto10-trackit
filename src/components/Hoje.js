@@ -1,7 +1,6 @@
 import axios from "axios"
 import styled from "styled-components"
 import { useState, useEffect } from "react"
-import check from "../img/check.svg"
 import ListaDeChecks from "./ListaDeChecks"
 import dayjs from "dayjs"
 
@@ -18,6 +17,7 @@ export default function Hoje({user,tapped,setTapped, checkAmount, setCheckAmount
         const promisse = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
         promisse.then(res => success(res))
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tapped])
 
     function success(res){

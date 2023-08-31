@@ -1,7 +1,6 @@
 import styled from "styled-components"
-import trash from "../img/trash.png"
+import trash from "../assets/img/trash.png"
 import axios from "axios"
-import { useState } from "react"
 
 export default function ListaDeHabitos ({name, days, i, id, user, setUser, changes, setChanges}) {
     const arr = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
@@ -38,7 +37,7 @@ export default function ListaDeHabitos ({name, days, i, id, user, setUser, chang
                     )}               
                         
                 </DaysList>
-                <img src={trash} onClick={Delete}/>
+                <img src={trash} onClick={Delete} alt=""/>
             </Container>
     )
 }

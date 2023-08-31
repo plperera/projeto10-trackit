@@ -1,4 +1,4 @@
-import logo from "../img/logo.svg"
+import logo from "../assets/img/logo.svg"
 import styled from "styled-components"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -55,7 +55,7 @@ export default function Login({footer, setFooter, menu, setMenu, user, setUser})
 
         <Container opacity={() => carregar ? (0.5):(1)}>
 
-            <img src={logo}></img>
+            <img src={logo} alt=""></img>
 
             <Formulario clicou={() => carregar ? ("none"):("all")} opacity={() => carregar ? (0.5):(1)}>
                 

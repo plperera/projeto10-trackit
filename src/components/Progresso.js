@@ -1,5 +1,4 @@
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components"
 
@@ -40,7 +39,7 @@ const Container = styled.div`
     p {
 
         position:absolute;
-        left: 33%;
+        left: 30%;
 
         color: #FFFFFF;
         font-size: 18px;

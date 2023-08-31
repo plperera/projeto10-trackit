@@ -1,7 +1,7 @@
 import axios from "axios"
 import styled from "styled-components"
 import { useState } from "react"
-import check from "../img/check.svg"
+import check from "../assets/img/check.svg"
 import { ThreeDots } from  'react-loader-spinner'
 
 
